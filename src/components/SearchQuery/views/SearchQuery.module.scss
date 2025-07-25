@@ -1,0 +1,35 @@
+.searchQuery {
+  position: relative;
+
+  &__img {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    background-color: #f0f2f5;
+
+    border: 1px solid rgb(223, 223, 253);
+    border-radius: 6px;
+    padding: 8px;
+    padding-left: 40px;
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    outline: none;
+
+    &:focus {
+      border: 1px solid rgb(170, 207, 255);
+    }
+
+    &::placeholder {
+      color: gray;
+    }
+  }
+}
