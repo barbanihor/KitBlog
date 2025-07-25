@@ -15,10 +15,12 @@ export default function PostItem({ post }: Props) {
   return (
     <li key={post.id} className={styles.postItem}>
       <Image src={image} width={56} height={56} alt="Post image" />
-      <Link href={`/posts/${post.id}`}>
-        <h3 className={styles.postItem__title}>{post.title}</h3>
-      </Link>
-      <p>By{post.author}</p>
+      <div className={styles.postItem__info}>
+        <Link href={`/posts/${post.id}`}>
+          <h3 className={styles.postItem__title}>{post.title}</h3>
+        </Link>
+        <p className={styles.postItem__author}>By {post.author}</p>
+      </div>
     </li>
   );
 }

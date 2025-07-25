@@ -1,0 +1,16 @@
+.appPage {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.appContainer {
+  padding-inline: 12px;
+  border: 1px solid black;
+  max-width: 390px;
+  width: 100%;
+}

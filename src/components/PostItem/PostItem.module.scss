@@ -6,10 +6,22 @@
 
   cursor: pointer;
 
+  &__info {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__title {
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;
+  }
+
+  &__author {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+    color: #637387;
   }
 }
 
