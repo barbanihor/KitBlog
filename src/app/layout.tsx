@@ -6,6 +6,7 @@ import { store } from '@/redux/store';
 import { HeaderProvider } from '@/components/HeaderProvider/HeaderProvider';
 import { AuthSync } from '@/components/AuthSync/AuthSync';
 import { Newsreader } from 'next/font/google';
+import styles from './AppLayout.module.scss';
 import '@/app/styles/globals.css';
 
 const newsreader = Newsreader({
@@ -18,17 +19,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={newsreader.variable}>
       <body>
-        <div
-          style={{
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{ maxWidth: '390px' }}>
+        <div className={styles.appPage}>
+          <div className={styles.appContainer}>
             <Provider store={store}>
               <AuthSync />
               <HeaderProvider>{children}</HeaderProvider>

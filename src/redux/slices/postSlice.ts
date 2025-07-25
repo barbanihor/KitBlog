@@ -1,3 +1,5 @@
+// redux/slices/postSlice.ts
+
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -15,6 +17,7 @@ const initialState: PostsState = {
   error: null,
 };
 
+// Async thunk для отримання постів
 export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
   const snapshot = await getDocs(q);
@@ -26,6 +29,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
       id: doc.id,
       title: data.title,
       content: data.content,
+      author: data.author, // ✅ Явно вказуємо автора
       createdAt: data.createdAt?.toDate().toISOString() || new Date().toISOString(),
     });
   });
@@ -33,6 +37,7 @@ export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
   return posts;
 });
 
+// Redux slice
 const postsSlice = createSlice({
   name: 'posts',
   initialState,

@@ -2,12 +2,13 @@
 
 import React, { useState, useCallback } from 'react';
 import { z } from 'zod';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPost } from '@/redux/slices/postSlice';
 import styles from './PostForm.module.scss';
 
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
+import { RootState } from '@/redux/store';
 
 const postSchema = z.object({
   title: z.string().min(5, 'Заголовок повинен бути не менше 5 символів'),
@@ -20,6 +21,8 @@ export default function PostForm() {
   const [input, setInput] = useState<PostInput>({ title: '', content: '' });
   const [errors, setErrors] = useState<Partial<Record<keyof PostInput, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch();
 
   const handleInputChange = useCallback(
@@ -50,11 +53,22 @@ export default function PostForm() {
         return;
       }
 
+      if (!user) {
+        setErrors({
+          title: 'Користувач не авторизований',
+          content: 'Користувач не авторизований',
+        });
+        return;
+      }
+
       setErrors({});
+
+      const authorName = user.name || user.email || 'Анонім';
 
       const docRef = await addDoc(collection(db, 'posts'), {
         title: result.data.title,
         content: result.data.content,
+        author: authorName,
         createdAt: serverTimestamp(),
       });
 
@@ -62,6 +76,7 @@ export default function PostForm() {
         id: docRef.id,
         title: result.data.title,
         content: result.data.content,
+        author: authorName,
         createdAt: new Date().toISOString(),
       };
 
@@ -73,14 +88,13 @@ export default function PostForm() {
     } catch (error) {
       console.error('Помилка при створенні поста:', error);
 
-      // Можна додати обробку помилок для користувача
       setErrors({
         title: 'Помилка при збереженні. Спробуйте ще раз.',
       });
     } finally {
       setIsSubmitting(false);
     }
-  }, [input, dispatch]);
+  }, [input, dispatch, user]);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
