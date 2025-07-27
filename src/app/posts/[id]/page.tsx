@@ -4,13 +4,15 @@ import { db } from '@/lib/firebase';
 import PostDetail from '@/components/PostDetail/PostDetail';
 
 interface PostDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default async function PostDetailPage({ params }: PostDetailPageProps) {
-  const postRef = doc(db, 'posts', params.id);
+  const { id } = await params;
+
+  const postRef = doc(db, 'posts', id);
   const postSnap = await getDoc(postRef);
 
   if (!postSnap.exists()) {
@@ -20,7 +22,7 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
   const postData = postSnap.data();
 
   const commentsQuery = query(
-    collection(db, 'posts', params.id, 'comments'),
+    collection(db, 'posts', id, 'comments'),
     orderBy('createdAt', 'asc')
   );
   const commentsSnap = await getDocs(commentsQuery);
