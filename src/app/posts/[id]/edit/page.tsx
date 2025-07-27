@@ -3,15 +3,17 @@ import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 import EditPostContent from '@/components/EditPostContent/EditPostContent';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const EditPost = ({ params }: PageProps) => {
+const EditPost = async ({ params }: PageProps) => {
+  const { id } = await params;
+
   return (
     <ProtectedRoute>
-      <EditPostContent id={params.id} />
+      <EditPostContent id={id} />
     </ProtectedRoute>
   );
 };
