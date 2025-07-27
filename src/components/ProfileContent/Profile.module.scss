@@ -1,0 +1,96 @@
+@use '../../app/styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 16px;
+
+  @include desktop {
+    padding: 32px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+}
+
+.box {
+  @include desktop {
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease;
+    padding: 32px;
+  }
+
+  &__1 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+
+  @include desktop {
+    font-size: 26px;
+  }
+}
+
+.logoutButton {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #c0392b;
+  }
+
+  @include desktop {
+    width: 30%;
+  }
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+
+  @include desktop {
+    gap: 20px;
+  }
+}
+
+.postItemWrapper {
+  padding: 12px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  transition: box-shadow 0.25s ease, transform 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+  }
+}
+
+.errorText {
+  color: red;
+}
+
+.noPostsText {
+  font-style: italic;
+  color: #555;
+}

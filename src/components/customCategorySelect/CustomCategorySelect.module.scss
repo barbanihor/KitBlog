@@ -1,0 +1,28 @@
+.selectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  color: #1c2c45;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-weight: 500;
+  border: 1px solid rgb(212, 212, 212);
+}
+
+.removeButton {
+  background: none;
+  border: none;
+  color: #495057;
+  margin-left: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}

@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import { doc, getDoc, collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import PostDetail from '@/components/PostDetail/PostDetail';
-import Link from 'next/link';
 
 interface PostDetailPageProps {
   params: {
@@ -37,19 +36,17 @@ export default async function PostDetailPage({ params }: PostDetailPageProps) {
   });
 
   return (
-    <>
-      <PostDetail
-        post={{
-          id: postSnap.id,
-          title: postData.title,
-          content: postData.content,
-          createdAt: postData.createdAt?.toDate().toISOString() || '',
-        }}
-        comments={comments}
-      />
-      <Link href={`/posts/${params.id}/edit`}>
-        <button>Редагувати</button>
-      </Link>
-    </>
+    <PostDetail
+      post={{
+        id: postSnap.id,
+        userId: postData.userId,
+        title: postData.title,
+        content: postData.content,
+        createdAt: postData.createdAt?.toDate().toISOString() || '',
+        categories: postData.categories || [],
+        author: postData.author,
+      }}
+      comments={comments}
+    />
   );
 }

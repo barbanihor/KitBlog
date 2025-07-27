@@ -1,0 +1,79 @@
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  width: 100%;
+  max-height: 144px;
+  height: 100%;
+  padding: 16px;
+  background-color: #f0f2f5;
+  font-size: 16px;
+  line-height: 24px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  outline: none;
+  resize: none;
+
+  &:hover {
+    border-color: #3e9ee3;
+  }
+
+  &:focus {
+    border-color: #3e9ee3;
+  }
+
+  &::placeholder {
+    color: #637387;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.875rem;
+}
+
+.submitButton {
+  margin-top: 20px;
+  height: 40px;
+  width: 100%;
+  font-weight: 500;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  line-height: 21px;
+}

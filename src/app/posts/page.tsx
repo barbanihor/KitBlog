@@ -1,11 +1,10 @@
 'use client';
 
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
 import { fetchPosts } from '@/redux/slices/postSlice';
 import styles from './PostList.module.scss';
-import Link from 'next/link';
 import { SearchQueryContainer } from '@/components/SearchQuery/containers/SearchQueryContainer';
 import { useHeader } from '@/components/HeaderProvider/HeaderProvider';
 import PostItem from '@/components/PostItem/PostItem';
@@ -17,6 +16,8 @@ export default function PostList() {
   const { posts, loading, error } = useSelector((state: RootState) => state.posts);
   const { setHeader } = useHeader();
   const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleClick = () => {
     router.push('/posts/new');
@@ -36,17 +37,27 @@ export default function PostList() {
     setHeader('Posts', addButton, 'buttonRight');
   }, [dispatch, setHeader]);
 
-  function handleInputChange() {}
+  const handleInputChange = (value: string) => {
+    setSearchQuery(value);
+  };
 
-  if (loading) return <p>Завантаження постів...</p>;
-  if (error) return <p style={{ color: 'red' }}>Помилка: {error}</p>;
-  if (posts.length === 0) return <p>Пости відсутні</p>;
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  if (loading) return <p>Loading posts...</p>;
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
+  if (posts.length === 0) return <p>No posts available</p>;
 
   return (
     <div className={styles.container}>
-      <SearchQueryContainer onChange={handleInputChange} placeholder="Пошук поста" />
+      <SearchQueryContainer
+        value={searchQuery}
+        onChange={handleInputChange}
+        placeholder="Search by post"
+      />
       <ul className={styles.postList}>
-        {posts.map((post) => (
+        {filteredPosts.map((post) => (
           <PostItem key={post.id} post={post} />
         ))}
       </ul>

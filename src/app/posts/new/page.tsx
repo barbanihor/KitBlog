@@ -2,23 +2,44 @@
 
 import { useHeader } from '@/components/HeaderProvider/HeaderProvider';
 import { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
 import styles from './NewPost.module.scss';
-import { AppDispatch } from '@/redux/store';
 import PostForm from '@/components/PostForm/PostForm';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import ProtectedRoute from '@/components/ProtectedRoute/ProtectedRoute';
 
 export default function NewPost() {
-  const dispatch = useDispatch<AppDispatch>();
   const { setHeader } = useHeader();
-  const addButton = useMemo(() => <button>Close</button>, []);
+  const router = useRouter();
 
   useEffect(() => {
-    setHeader('New Post', addButton, 'buttonLeft');
-  }, [dispatch, setHeader]);
+    setHeader('New Post', headerButton, 'buttonLeft');
+  }, []);
+
+  const handleBack = () => {
+    router.push('/posts');
+  };
+
+  const headerButton = useMemo(
+    () => (
+      <button className={styles.closeButton}>
+        <Image
+          src="/icons/close.svg"
+          width={24}
+          height={24}
+          alt="Close button"
+          onClick={handleBack}
+        />
+      </button>
+    ),
+    []
+  );
 
   return (
-    <div className={styles.container}>
-      <PostForm />
-    </div>
+    <ProtectedRoute>
+      <div className={styles.container}>
+        <PostForm />
+      </div>
+    </ProtectedRoute>
   );
 }

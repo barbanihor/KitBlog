@@ -5,22 +5,38 @@ import Link from 'next/link';
 import styles from './PostItem.module.scss';
 import Image from 'next/image';
 import { imgs } from '@/images/postImages';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Props {
   post: Post;
+  showEditButton?: boolean;
 }
 
-export default function PostItem({ post }: Props) {
-  const image = imgs.randomImg();
+export default function PostItem({ post, showEditButton = false }: Props) {
+  const image = useMemo(() => imgs.randomImg(), []);
+  const router = useRouter();
+
+  const handleEdit = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    router.push(`/posts/${post.id}/edit`);
+  };
+
   return (
-    <li key={post.id} className={styles.postItem}>
-      <Image src={image} width={56} height={56} alt="Post image" />
-      <div className={styles.postItem__info}>
-        <Link href={`/posts/${post.id}`}>
+    <Link href={`/posts/${post.id}`}>
+      <div key={post.id} className={styles.postItem}>
+        <Image src={image} width={56} height={56} alt="Post image" />
+        <div className={styles.postItem__info}>
           <h3 className={styles.postItem__title}>{post.title}</h3>
-        </Link>
-        <p className={styles.postItem__author}>By {post.author}</p>
+          <p className={styles.postItem__author}>By {post.author}</p>
+        </div>
+        {showEditButton && (
+          <button onClick={handleEdit} className={styles.editButton}>
+            Edit
+          </button>
+        )}
       </div>
-    </li>
+    </Link>
   );
 }

@@ -8,14 +8,21 @@ import { AuthSync } from '@/components/AuthSync/AuthSync';
 import { Newsreader } from 'next/font/google';
 import styles from './AppLayout.module.scss';
 import '@/app/styles/globals.css';
+import MobileFooter from '@/components/MobileFooter/MoblieFooter';
+import { usePathname } from 'next/navigation';
+import { Toaster } from 'react-hot-toast';
+import DesktopHeader from '@/components/DesktopHeader/DesktopHeader';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
-  weight: ['400', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-newsreader',
 });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  const hideFooter = pathname === '/register' || pathname === '/login';
+
   return (
     <html lang="en" className={newsreader.variable}>
       <body>
@@ -23,7 +30,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className={styles.appContainer}>
             <Provider store={store}>
               <AuthSync />
-              <HeaderProvider>{children}</HeaderProvider>
+              <DesktopHeader />
+              <HeaderProvider>
+                <Toaster position="top-right" reverseOrder={false} />
+                {children}
+              </HeaderProvider>
+              {!hideFooter && <MobileFooter />}
             </Provider>
           </div>
         </div>

@@ -55,7 +55,7 @@ export function HeaderProvider({ children }: { children: ReactNode }) {
           {buttonPosition === 'buttonRight' ? button : null}
         </div>
       </header>
-      <main>{children}</main>
+      <main className={styles.main}>{children}</main>
     </HeaderContext.Provider>
   );
 }

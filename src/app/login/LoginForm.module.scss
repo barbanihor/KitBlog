@@ -1,0 +1,92 @@
+@use '../../app/styles/mixins' as *;
+
+.formContainer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+
+  @media (min-width: 768px) {
+    padding: 60px 0;
+  }
+}
+
+.form {
+  min-width: 500px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include desktop {
+    max-width: 400px;
+    border: 1px solid #e0e0e0;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.title {
+  align-self: center;
+}
+
+.field {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  input {
+    width: 100%;
+    height: 48px;
+    padding: 16px;
+    background-color: #f0f2f5;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    outline: none;
+
+    &:hover {
+      border-color: #3e9ee3;
+    }
+
+    &:focus {
+      border-color: #3e9ee3;
+    }
+
+    &::placeholder {
+      color: #637387;
+    }
+  }
+}
+
+.error {
+  margin-top: 0.3rem;
+  font-size: 0.875rem;
+  color: #e00;
+}
+
+.button {
+  margin-top: 60px;
+  height: 40px;
+  width: 100%;
+  font-weight: 600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  font-size: 16px;
+  line-height: 21px;
+}

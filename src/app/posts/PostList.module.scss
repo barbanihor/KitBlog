@@ -1,4 +1,12 @@
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .postList {
+  margin-top: 50px;
   width: 100%;
   list-style: none;
   padding: 0;

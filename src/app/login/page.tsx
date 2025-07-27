@@ -1,45 +1,96 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/slices/authSlice';
+import styles from './LoginForm.module.scss';
+import Link from 'next/link';
+import { useHeader } from '@/components/HeaderProvider/HeaderProvider';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const schema = z.object({
+  email: z.string().email('Invalid email'),
+  password: z.string().min(6, 'Minimum 6 characters'),
+});
+
+type FormData = z.infer<typeof schema>;
+
+const LoginForm: React.FC = () => {
+  const { setHeader } = useHeader();
+  const dispatch = useDispatch();
   const router = useRouter();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
+  const onSubmit = async (data: FormData) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+
+      const user = userCredential.user;
+
+      dispatch(
+        setUser({
+          uid: user.uid,
+          email: user.email ?? '',
+          name: user.displayName ?? '',
+        })
+      );
+
+      reset();
+      toast.success('Successfully logged in');
       router.push('/posts');
-    } catch (err: any) {
-      setError(err.message);
+    } catch (error: any) {
+      console.error('Login error:', error);
+      toast.error('Login failed');
     }
   };
 
+  useEffect(() => {
+    setHeader('Welcome back', <button style={{ display: 'none' }} />, 'buttonLeft');
+  }, []);
+
   return (
-    <form onSubmit={handleLogin}>
-      <h2>Вхід</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-      />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <button type="submit">Увійти</button>
-    </form>
+    <div className={styles.formContainer}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <h1 className={styles.title}>Log in to your account</h1>
+
+        <div className={styles.field}>
+          <label htmlFor="email">Email</label>
+          <input id="email" type="email" {...register('email')} />
+          {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="password">Password</label>
+          <input id="password" type="password" {...register('password')} />
+          {errors.password && <p className={styles.error}>{errors.password.message}</p>}
+        </div>
+
+        <button type="submit" disabled={isSubmitting} className={styles.button}>
+          {isSubmitting ? 'Logging in...' : 'Log In'}
+        </button>
+
+        <p style={{ marginTop: '1rem', textAlign: 'center' }}>
+          Don&apos;t have an account? <Link href="/register">Register</Link>
+        </p>
+      </form>
+    </div>
   );
-}
+};
+
+export default LoginForm;

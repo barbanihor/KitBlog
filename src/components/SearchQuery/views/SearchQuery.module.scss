@@ -3,33 +3,33 @@
 
   &__img {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    width: 24px;
-    height: 24px;
+    top: 12px;
+    left: 10px;
+    width: 18px;
+    height: 18px;
   }
 
   &__input {
     width: 100%;
-    border: none;
+    height: 46px;
+    padding: 16px 35px;
     background-color: #f0f2f5;
-
-    border: 1px solid rgb(223, 223, 253);
-    border-radius: 6px;
-    padding: 8px;
-    padding-left: 40px;
-
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    border-radius: 8px;
+    border: 1px solid transparent;
     outline: none;
 
+    &:hover {
+      border-color: #b3ccde;
+    }
+
     &:focus {
-      border: 1px solid rgb(170, 207, 255);
+      border-color: #3e9ee3;
     }
 
     &::placeholder {
-      color: gray;
+      color: #637387;
     }
   }
 }

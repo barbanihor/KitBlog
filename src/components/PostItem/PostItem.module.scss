@@ -1,12 +1,19 @@
+@use '../../app/styles/mixins' as *;
+
 .postItem {
   width: 100%;
   display: flex;
+  align-items: center;
   padding-block: 8px;
   gap: 16px;
-
   cursor: pointer;
 
+  @include desktop {
+    gap: 24px;
+  }
+
   &__info {
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
   }
@@ -25,6 +32,22 @@
   }
 }
 
-.postItem:hover {
-  background-color: #f9f9f9;
+.editButton {
+  height: 40px;
+  background-color: rgb(53, 95, 54);
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+
+  @include desktop {
+    margin-left: auto;
+  }
+
+  &:hover {
+    background-color: #45a049;
+  }
 }
