@@ -54,7 +54,7 @@ const LoginForm: React.FC = () => {
       reset();
       toast.success('Successfully logged in');
       router.push('/posts');
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
       toast.error('Login failed');
     }
