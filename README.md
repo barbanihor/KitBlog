@@ -1,40 +1,57 @@
-git push origin main
-
 # KitBlog
+---
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+[Demo KitBlog](https://kit-blog-hgcjv7gl0-barbanihors-projects.vercel.app/)
 
-## Getting Started
+## Особливості
 
-First, run the development server:
+1. Я написав додаток за 2.5 дні.  
+2. Щоб встигнути вчасно та продемонтрувати готову версію блогу я сконцентрувався на ключовій функціональності, реалізації клієнтських компонентів і UI, коректній типізації, розробці основних фіч: авторизації, створення/редагування постів, базового UI/UX.  
+3. Я забезпечив якісну структуру проєкту та дотримувався кращих практик React/TypeScript  
+4. Звісно, через таку швидкість розробки залишилось чимало багів і за нормальних умов, я б не допускав більшість з них, або мав би час на дебаг і краще продумування реалізації.  
+5. Я не робив SSR, застосування SSR додало б значної складності і потребувало б більше часу на налаштування серверної логіки, рендеринг даних на сервері, управління кешуванням і SEO-оптимізацією і я просто би зробив напівживий MVP, зате з SSR.  
+Це, безумовно, важливий аспект, який я додав би і відрефакторив при наявності достатньої кількості часу.  
+6. Дизайн адаптивний. Я використовував mobile-first підхід, прошу звернути увагу в т.ч і на мобільну версію. Наразі я зробив адаптацію під мобілку і під десктоп. Для економії часу не робив проміжні адаптації. Мобільна і десктопна версії виглядають однаково чудово, хоч більшість часу я витратив на mobile.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Структура блогу KitBlog
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Дизайн.**  
+Я не люблю працювати з поганими дизайнами, чи робити функціонал на голий скелет, тому я прийняв рішення використати інструмент stitch, який генерує компоненти UI, які можна імпортувати в Figma. Кожен компонент і деталь я генерував окремо, тому загальний дизайн - це більше композиція, ніж монолітно згенерований бездушний макет.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Реєстрація/логування**  
+Я подумав, що для реалізації більшості фіч в додатку потрібен автентифікований юзер, автентифікація реалізована через firebaseAuth і налаштовані захищені маршрути.
 
-## Learn More
+3. **HomePage**  
+Featured post використовує замокані картинки, які рандомно генеруються. Я використав бібліотеку Swiper для інтеграції слайдера. Використання firebaseStorage для картинок додало б трохи часу до загального налаштування, тому для економії часу я використав мокані.
 
-To learn more about Next.js, take a look at the following resources:
+4. **Posts**  
+Список постів усіх юзерів, з тайтлом і автором. По кліку можна подивитися деталі. Теж використовують мокані рандомно згенеровані картинки.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Create**  
+Додавання постів. Форма використовує useFormHook + zod валідатор. Після успіху перенаправлення на /posts.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+6. **Profile**  
+Тут можна перевірити свої облікові дані, подивитися всі пости юзера, та відредагувати чи видалити їх.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Технології
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Next.js 15.4.4  
+- React 18+  
+- TypeScript  
+- UseForm  
+- Redux Toolkit  
+- Swiper  
+- ESLint (React, TypeScript)  
+- Vercel для CI/CD  
+- React Hook Form  
+- Zod  
+- Firebase  
+- Sass, CSS modules
+- React Hot Toast  
+- React Select  
+- classnames  
+- uuid  
