@@ -1,7 +1,7 @@
 # KitBlog
 ---
 
-[Demo KitBlog](https://kit-blog-hgcjv7gl0-barbanihors-projects.vercel.app/)
+[Demo KitBlog](https://kit-blog-wine.vercel.app/)
 
 ## Особливості
 
